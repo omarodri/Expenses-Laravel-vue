@@ -13,7 +13,30 @@
     </div>
     <div class="row">
         <div class="col">
-Details
+            <h3>Details</h3>
+            <table class="table table-striped table-inverse table-responsive">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($report->expenses as $expense)
+                        <tr>
+                            <td scope="row">{{ $expense->description }}</td>
+                            <td>{{ $expense->created_at }}</td>
+                            <td>{{ $expense->amount }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a href="/expense_reports/{{ $report->id }}/expenses/create" class="btn btn-primary">Add Expense</a>
         </div>
     </div>
 @endsection

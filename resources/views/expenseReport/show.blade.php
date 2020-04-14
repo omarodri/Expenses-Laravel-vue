@@ -9,6 +9,7 @@
     <div class="row">
         <div class="col">
             <a class="btn btn-secondary" href="/expense_reports">Back</a>
+            <a class="btn btn-success" href="/expense_reports/{{ $report->id }}/sendMail">Send Report</a>
         </div>
     </div>
     <div class="row">

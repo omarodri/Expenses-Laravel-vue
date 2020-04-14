@@ -40,3 +40,7 @@ Route::post('/expense_reports/{expense_report}/expenses', 'ExpenseController@sto
 //         'Nombre'=>'Omar'
 //     ];
 // });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

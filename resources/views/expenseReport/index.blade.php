@@ -18,7 +18,9 @@
                     <tr>
                         <th>ID</th>
                         <th>Expense</th>
-                        <th colspan="2">Option</th>
+                        <th>Owner</th>
+                        <th>Amount</th>
+                        <th colspan="2">Options</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -26,8 +28,10 @@
                         <tr>
                             <td scope="row">{{ $expenseReport->id }}</td>
                             <td scope="row"><a href="\expense_reports/{{ $expenseReport->id}}">{{ $expenseReport->title }}</a></td>
-                            <td scope="row"><a href="\expense_reports/{{ $expenseReport->id}}/edit">Edit</a></td>
-                            <td scope="row"><a href="\expense_reports/{{ $expenseReport->id}}/confirmDelete">Delete</a></td>
+                            <td scope="row">{{ $expenseReport->name }}</td>
+                            <td scope="row">{{ $expenseReport->total }}</td>
+                            <td scope="row"><a class="btn btn-success" href="\expense_reports/{{ $expenseReport->id}}/edit">Edit</a></td>
+                            <td scope="row"><a class="btn btn-danger"href="\expense_reports/{{ $expenseReport->id}}/confirmDelete">Delete</a></td>
                         </tr>
                         @endforeach
                     </tbody>

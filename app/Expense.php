@@ -11,4 +11,6 @@ class Expense extends Model
         // return $this->belongsTo('App\User', 'foreign_key', 'other_key');
         return $this->belongsTo(ExpenseReport::class);
     }
+
+
 }

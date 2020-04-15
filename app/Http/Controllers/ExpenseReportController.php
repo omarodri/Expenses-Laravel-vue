@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\ExpenseReport;
 use App\Mail\SummaryReport;
 use Illuminate\Support\Facades\Mail;
+use Auth;
 
 class ExpenseReportController extends Controller
 {
@@ -21,8 +22,11 @@ class ExpenseReportController extends Controller
     public function index()
     {
         // return ExpenseReport::all();
+        $expenseReport = new ExpenseReport();
+
+        // Incluided in challenge Omar
         return view('expenseReport.index',[
-            'expenseReports' => ExpenseReport::all()
+            'expenseReports' => $expenseReport->allAndUser()
         ]);
     }
 
@@ -44,15 +48,20 @@ class ExpenseReportController extends Controller
      */
     public function store(Request $request)
     {
+        $user = $request->user();
+
         $valideDate = $request->validate([
             'title' => 'required|min:3'
         ]);
 
         $report = new ExpenseReport();
         $report->title = $valideDate['title'];
+        $report->user_id = $user->id;
+
         $report->save();
 
-        return redirect('/expense_reports');
+        return redirect('/expense_reports')
+        ->with('message', 'Expense Report was added successfuly!');
     }
 
     /**
@@ -64,9 +73,15 @@ class ExpenseReportController extends Controller
     public function show(ExpenseReport $expenseReport)
     {
         // $report = ExpenseReport::findOrFail($id);
-        return view('expenseReport.show', [
-            'report' => $expenseReport
-        ]);
+        if($expenseReport->user_id == Auth::user()->id){
+            return view('expenseReport.show', [
+                'report' => $expenseReport
+            ]);
+        }
+        else {
+            return redirect('/expense_reports')
+            ->with('message', 'Access denied to that report!');
+            }
     }
 
     /**
@@ -100,7 +115,8 @@ class ExpenseReportController extends Controller
         $report->title = $valideDate['title'];
         $report->save();
 
-        return redirect('/expense_reports');
+        return redirect('/expense_reports')
+        ->with('message', 'Expense Report was updated successfuly!');
     }
 
     /**
@@ -114,7 +130,8 @@ class ExpenseReportController extends Controller
         $report = ExpenseReport::findOrFail($id);
         $report->delete();
 
-        return redirect('/expense_reports');
+        return redirect('/expense_reports')
+        ->with('message', 'Expense Report was deleted successfuly!');
     }
 
     public function confirmDelete($id){
@@ -138,6 +155,7 @@ class ExpenseReportController extends Controller
         $report = ExpenseReport::findOrFail($id);
         Mail::to($request->get('email'))->send(new SummaryReport($report));
 
-        return redirect('/expense_reports/'. $id);
+        return redirect('/expense_reports/'. $id)
+        ->with('message', 'Expense Report Email was sended successfuly!');
     }
 }

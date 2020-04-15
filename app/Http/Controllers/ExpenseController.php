@@ -54,7 +54,8 @@ class ExpenseController extends Controller
         $expense->expense_report_id = $expenseReport->id;
         $expense->save();
 
-        return redirect('/expense_reports/'.$expenseReport->id);
+        return redirect('/expense_reports/'.$expenseReport->id)
+                        ->with('status', 'Expense was added successfuly!');
 
     }
 
@@ -66,7 +67,7 @@ class ExpenseController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**

@@ -32,6 +32,15 @@
                         </tr>
                         @endforeach
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td>Total</td>
+                            <td style="text-align:right">
+                                {{$report->expenses->sum('amount')}}
+                            </td>
+                        </tr>
+                    </tfoot>
             </table>
         </div>
     </div>

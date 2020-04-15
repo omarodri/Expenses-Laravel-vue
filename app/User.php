@@ -10,6 +10,10 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    // Incluided in challenge Omar
+    public function expenseReports(){
+        return $this->hasMany(ExpenseReport::class);
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -36,4 +40,5 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
 }
